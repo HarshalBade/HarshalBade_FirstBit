@@ -1,1 +1,218 @@
-dwe
+ASSIGNMENT 2
+
+Q1) Create the tables Member, Books, and Issue WITHOUT constraints. 
+Ans->
+CREATE TABLE member(
+    member_id INT,
+    member_name VARCHAR(30),
+    member_address VARCHAR(50),
+    acc_open_date DATE,
+    membership_type VARCHAR(20),
+    fees_paid DECIMAL(10,2),
+    max_books_allowed INT,
+    penalty_amount DECIMAL(10,2) );
+
+CREATE TABLE books(
+    book_no INT,
+    book_name VARCHAR(30),
+    author_name VARCHAR(30),
+    cost DECIMAL(10,2),
+    category VARCHAR(15) );
+
+CREATE TABLE issue(
+    lib_issue_id INT,
+    book_no INT,
+    member_id INT,
+    issue_date DATE,
+    return_date DATE );
+
+Q2) Display the structure of all three tables using DESC. 
+Ans->
+	DESC member;
+
+	DESC books;
+
+	DESC issue;
+
+Q3) Drop the Member table. 
+Ans->
+	DROP TABLE member;
+
+
+Q4) Create the Member table again with these constraints: - Member_Id must be PRIMARY KEY - Membership_Type must allow only: 
+('Lifetime','Annual','Half Yearly','Quarterly')
+Ans->
+CREATE TABLE member(
+    member_id INT PRIMARY KEY,
+    member_name VARCHAR(30),
+    member_address VARCHAR(50),
+    acc_open_date DATE,
+    membership_type VARCHAR(20) CHECK (membership_type IN ('Lifetime','Annual','Half Yearly','Quarterly')),
+    fees_paid DECIMAL(10,2),
+    max_books_allowed INT,
+    penalty_amount DECIMAL(10,2) );
+
+Q5) Alter Member table to increase Member_Name size from 30 to 40. 
+Ans->
+ALTER TABLE member
+    MODIFY COLUMN member_name VARCHAR(40);
+
+Q6) Add a column Reference (VARCHAR (30)) to Issue table. 
+Ans->
+ALTER TABLE issue
+    ADD COLUMN reference VARCHAR(30);
+
+Q7) Drop the column Reference from Issue table. 
+Ans->
+ALTER TABLE issue
+    DROP COLUMN reference;
+
+Q8) Rename the table Issue to Lib_Issue. 
+Ans->
+RENAME TABLE issue TO lib_issue;
+
+Q9) Insert the following records into Member table: 
+Ans->
+INSERT INTO member (member_id,member_name,member_address,acc_open_date,membership_type,fees_paid,max_books_allowed,penalty_amount) 
+VALUES (1,'Rich Sharma','PUNE','10-12-05','Lifetime',25000,5,50);
+INSERT INTO member (member_id,member_name,member_address,acc_open_date,membership_type,fees_paid,max_books_allowed) 
+VALUES (2,'Garima Sen','PUNE',CURDATE(),'Annual',1000,3,NULL);
+
+Q10) Insert at least 5 more records with suitable data into Member table.
+Ans->
+ INSERT INTO member (member_id,member_name,member_address,acc_open_date,membership_type,fees_paid,max_books_allowed,penalty_amount) 
+ VALUES (3,'Harshal Bade','MUMBAI','26-3-05','Lifetime',28000,5,0),
+        (4,'Sanket Suryavanshi','PUNE','26-2-06','Quarterly',8000,3,100),
+        (5,'Harry','MUMBAI','25-3-23','Half Yearly',20000,5,60),
+        (6,'Nikhil Patil','THANE','25-7-9','Lifetime',1200,4,70),
+	(7,'Vikram Seth','BANGALORE','2026-01-10','Annual',1000,3,20);
+
+Q11) Try to decrease Member_Name size from 40 to 20. 
+Ans-> ALTER TABLE member
+    	MODIFY COLUMN member_name VARCHAR(20);
+
+Q12) Add a CHECK constraint: 
+	Max_Books_Allowed must be less than 100.
+Ans->	
+ ALTER TABLE member
+    ADD CONSTRAINT CHECK (max_books_allowed<100);
+
+Q13) CREATE TABLE MemberBackup AS 
+SELECT * FROM Member; 
+Ans->
+    CREATE TABLE MemberBackup AS 
+	SELECT * FROM Member; 
+
+Q14) Add named constraints: 
+	- Max_Books_Allowed < 100 
+	- Penalty_Amount <= 1000
+Ans->
+ALTER TABLE member
+    ADD CONSTRAINT CHECK (max_books_allowed<100);
+
+ALTER TABLE member
+   ADD CONSTRAINT CHECK (penalty_amount<=1000);
+
+Q15) Drop the Books table.
+Ans->
+	DROP TABLE books; 
+
+Q16) Create Books table again with constraints: 
+	- Book_No PRIMARY KEY 
+	- Book_Name NOT NULL 
+	- Category must be one of: 
+('System','Fiction','Database','RDBMS','Others','Science') 
+Ans->
+CREATE TABLE books(
+    book_no INT PRIMARY KEY,
+    book_name VARCHAR(30) NOT NULL,
+    author_name VARCHAR(30),
+    cost DECIMAL(10,2),
+    category ENUM('System','Fiction','Database','RDBMS','Others','Science') );
+
+Q17)  Insert the following data into Books table: 
+Ans->
+     INSERT INTO books VALUES
+	(101,'Let Us C','Denis Ritchie',450,'System'),
+    	(102,'Oracle Complete Ref','Loni',550,'Database'),
+        (103,'MAstering SQL','Loni',250,'Database'),
+    	(104,'PL SQL Ref','Scott Urman',750,'Database'),
+    	(105,'National Geographic','Adis Scott',1000,'Science');
+
+Q18) Insert at least 5 more records into Books table.
+Ans->
+     INSERT INTO Books VALUES 
+	(106, 'Java Fundamentals', 'Herbert Schildt', 600, 'System'),
+	(107, 'Introduction to Algos', 'Cormen', 900, 'Others'),
+ 	(108, 'The Hobbit', 'J.R.R. Tolkien', 350, 'Fiction'),
+	(109, 'Database Internals', 'Alex Petrov', 800, 'Database'),
+	(110, 'A Brief History of Time', 'Stephen Hawking', 400, 'Science');
+ 
+Q19) View all data from Member and Books tables using SELECT.
+Ans->
+	SELECT * FROM member;
+	SELECT * FROM books;
+
+Q20) Drop Lib_Issue table. 
+Ans->
+	DROP TABLE lib_issue;
+
+Q21) Create Issue table again with constraints: 
+	- Lib_Issue_Id PRIMARY KEY 
+	- Book_No FOREIGN KEY REFERENCES Books(Book_No) 
+	- Member_Id FOREIGN KEY REFERENCES Member(Member_Id)
+Ans->
+CREATE TABLE lib_issue(
+    lib_issue_id INT PRIMARY KEY,
+    book_no INT,
+    member_id INT,
+    issue_date DATE,
+    return_date DATE,
+    FOREIGN KEY (book_no) REFERENCES books(book_no),
+    FOREIGN KEY (member_id) REFERENCES member(member_id) );
+
+Q22) Insert the following records into Issue table:
+Ans->
+INSERT INTO issue value
+    (7001,101,1,'2024-12-10'),
+    (7002,102,2,'2024-12-25'),
+    (7003,104,1,'2025-01-15'),
+    (7004,101,1,'2025-02-04'),
+    (7005,104,2,'2025-03-15'),
+    (7006,101,3,'2025-04-18');
+
+Q23) Try inserting an Issue record with Member_Id not existing in Member table. 
+Observe and write the error. 
+Ans->
+INSERT INTO issue value (7007,102,7,'2026-02-10');
+
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`mydatabase`.`issue`, CONSTRAINT `issue_ibfk_2` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`))
+
+Q24) Try deleting Member_Id = 1 from Member table. 
+Observe and write the foreign key error. 
+Ans->
+DELETE FROM member WHERE member_id=1;
+
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`mydatabase`.`issue`, CONSTRAINT `issue_ibfk_2` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`))
+
+Q25) Update Return_Date for Issue_Id 7004 and 7005 to 15 days after Issue_Date. 
+Ans->
+ UPDATE issue
+    SET return_date = DATE_ADD(issue_Date, INTERVAL 15 DAY)
+    WHERE lib_issue_id IN (7004, 7005);
+
+Q26) Delete all Issue records where Member_Id = 1 and Issue_Date is before '2006-12-10'. 
+Ans->
+ DELETE FROM issue
+    WHERE member_id=1 AND issue_date < '2006-12-10';
+
+Q27) Delete all Books where Category is not Database or RDBMS. 
+Ans->
+DELETE FROM books
+    WHERE category NOT IN ('database','RDBMS');
+
+Q28) Drop all three tables: Issue, Member, Books.
+Ans->
+	DROP TABLE issue;
+	DROP TABLE member;
+	DROP TABLE books;
