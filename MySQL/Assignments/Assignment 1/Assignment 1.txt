@@ -1,3 +1,5 @@
+ASSIGNMENT 1 
+
 Q1) Display Databases 
 Ans->
 SHOW DATABASES;
@@ -90,10 +92,6 @@ Q9) Composite Foreign Key Implementation
 Step 1: Create department_managers Table 
 Create a table named department_managers with following structure:
 Composite Primary Key: (department_id, manager_id) 
-
-Step 2: Apply Composite Foreign Key in employees Table 
-Alter the employees table so that the combination (department_id, manager_id) 
-must exist in department_managers(department_id, manager_id).
 Ans->
 CREATE TABLE department_managers(
     department_id DECIMAL(4,0),
@@ -101,6 +99,11 @@ CREATE TABLE department_managers(
     manager_name VARCHAR(50) NOT NULL,
     PRIMARY KEY(department_id,manager_id) );
 
+
+Step 2: Apply Composite Foreign Key in employees Table 
+Alter the employees table so that the combination (department_id, manager_id) 
+must exist in department_managers(department_id, manager_id).
+Ans->
 ALTER TABLE employee
     ADD CONSTRAINT fk_dept_manager
     FOREIGN KEY (department_id, manager_id)
