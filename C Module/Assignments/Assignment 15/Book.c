@@ -7,22 +7,22 @@ typedef struct Book{
 }Book;
 void displayDetail(Book);
 void main(){
-	Book bk;
+	Book book;
 	printf("Enter Book Id: ");
-	scanf("%d",&bk.book_id);
+	scanf("%d",&book.book_id);
 		
 	printf("Enter Book Name: ");
-	scanf("%s",bk.book_name);
+	scanf("%s",book.book_name);
 		
 	printf("Enter Book Author: ");
-	scanf("%s",bk.book_author);
+	scanf("%s",book.book_author);
 	
 	printf("Enter Price: ");
-	scanf("%d",&bk.price);
+	scanf("%d",&book.price);
 	
-	displayDetail(bk);
+	displayDetail(book);
 }
-void displayDetail(Book bk){
-	printf("\nBook Id: %d\nBook Name: %s\nBook Author: %s\nPrice: %d",bk.book_id,bk.book_name,bk.book_author,bk.price);
+void displayDetail(Book book){
+	printf("\nBook Id: %d\nBook Name: %s\nBook Author: %s\nPrice: %d",book.book_id,book.book_name,book.book_author,book.price);
 }
 
