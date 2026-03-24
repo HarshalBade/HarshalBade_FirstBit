@@ -1,0 +1,77 @@
+ASSIGNMENT 3
+
+Q1) Write an SQL query to insert the above employee records into the EMPLOYEES table.
+Ans->
+
+INSERT INTO employee 
+(employee_id, first_name, last_name, email, phone_no, hire_date, jod_id, salary, commission, manager_id, department_id)
+VALUES
+(100,'Steven','King','steven.king@email.com','9876543210','2003-06-17',1,24000.00,NULL,200,10),
+(101,'Neena','Kochhar','neena.kochhar@email.com','9876543211','2005-09-21',2,17000.00,NULL,200,10),
+(102,'Lex','De Haan','lex.dehaan@email.com','9876543212','2001-01-13',2,17000.00,NULL,200,10),
+(103,'Alexander','Hunold','alex.hunold@email.com','9876543213','2006-01-03',3,9000.00,NULL,103,60),
+(104,'Bruce','Ernst','bruce.ernst@email.com','9876543214','2007-05-21',3,6000.00,NULL,103,60),
+(105,'David','Austin','david.austin@email.com','9876543215','2005-06-25',3,4800.00,NULL,103,60),
+(106,'Valli','Pataballa','valli.p@email.com','9876543216','2006-02-05',3,4800.00,NULL,103,60),
+(107,'Diana','Lorentz','diana.l@email.com','9876543217','2007-02-07',3,4200.00,NULL,114,30),
+(108,'Nancy','Greenberg','nancy.g@email.com','9876543218','2002-08-17',4,12000.00,NULL,145,80),
+(109,'Daniel','Faviet','daniel.f@email.com','9876543219','2002-08-16',4,9000.00,NULL,145,80);
+
+Q2) Write a single SQL INSERT statement to insert at least 3 department records into the DEPARTMENTS table.
+Ans->
+
+INSERT INTO DEPARTMENTS 
+(DEPARTMENT_ID, DEPARTMENT_NAME, MANAGER_ID, LOCATION_ID) 
+VALUES
+(10, 'Administration', 200, 1700),
+(20, 'Marketing', 201, 1800),
+(30, 'Purchasing', 114, 1700),
+(60, 'IT', 103, 1400),
+(80, 'Sales', 145, 2500);
+
+Q3) Write an SQL query to insert one new job record into the JOBS table ensuring duplicate JOB_ID is not allowed. 
+Ans->
+System does not allow to add duplicate primary key
+insert into jobs values (4,'Manager',40000,90000);
+ERROR 1062 (23000): Duplicate entry '4' for key 'jobs.PRIMARY'
+
+right query->
+insert into jobs values (5,'Manager',40000,90000);
+
+Q4) Write an SQL query to increment the salary of each employee by 10%.
+Ans->
+ UPDATE employee SET salary=(salary+(salary*0.10));
+
+Q5) Write an SQL query to set EMAIL = 'not available' for employees whose department_id is 80 and commission_pct is less than 0.20. 
+Ans->
+UPDATE employee SET email='not available'
+    WHERE department_id=80 AND commission<(commission*0.20);
+
+Q6) Write an SQL query to set EMAIL = 'not available' for employees who belong to the 'Purchasing' department.
+Ans->
+UPDATE employee SET email='not available'
+    WHERE department_id=(SELECT department_id FROM departments WHERE department_name='purchasing');
+
+Q7) Write an SQL query to update EMAIL = 'not available' and COMMISSION_PCT = 0.10 for all employees.
+Ans->
+UPDATE employee SET email='not available' , commission=(commission+(commission*0.10));
+
+Q8) Write an SQL query to increase salary by 2000 for employees working in department_id = 60. 
+Ans->
+UPDATE employee SET salary=salary+2000 WHERE department_id=60;
+
+Q9) Write an SQL query to delete employees whose salary is less than 5000. 
+Ans->
+DELETE FROM employee WHERE salary < 5000;
+
+Q10) Write an SQL query to insert one new employee record with your own suitable details (use a new employee_id).
+Ans->
+INSERT INTO employee VALUES(110,'Harry','Bade','harry.bade@gmail.com',1234567890,'2026-1-1',3,25000,999,103,60);
+
+Q11) Write an SQL query to change manager_id to 300 for all employees in department_id = 80.
+Ans->
+UPDATE employee SET manager_id=300 WHERE department_id=80;
+ 
+Q12) Write an SQL query to delete the department record where department_id = 20 and observe the error if employees exist in that department.
+Ans->
+ DELETE FROM departments WHERE department_id=20;
