@@ -1,0 +1,72 @@
+ASSIGNMENT 6
+
+Q1) Write an SQL query to create a view named Book_List that displays the following columns 
+from Books table: 
+Book_No, Book_Name, Author_Name, Cost, Category. 
+Ans->
+Create View:-
+CREATE VIEW book_list AS
+    SELECT * FROM books;
+
+
+Q2) Write an SQL query to display all records from the view Book_List.
+Ans->
+Display View:-
+SELECT * FROM book_list;
+ 
+Q3) Write an SQL query to create a view named Issued_Books that displays details of all books 
+that are currently issued (books whose Return_Date is NULL). 
+Output columns should include: 
+Lib_Issue_Id, Book_No, Member_Id, Issue_Date. 
+Ans->
+CREATE VIEW issued_books AS
+    SELECT lib_issue_id,book_no,member_id,issue_date
+    FROM issue WHERE return_date is NULL;
+
+
+Q4) Write an SQL query to display all records from the view Issued_Books. 
+Ans->
+SELECT * FROM issued_books;
+
+Q5) Write an SQL query to create a view named Member_Penalty that displays Member_Id, Member_Name, Penalty_Amount 
+for members whose Penalty_Amount is greater than 0. 
+Ans->
+CREATE VIEW member_penalty AS
+    SELECT member_id,member_name,penalty_amount
+    FROM member WHERE penalty_amount > 0;
+
+Q6) Write an SQL query to display all records from the view Member_Penalty.
+Ans->
+SELECT * FROM member_penalty;
+ 
+Q7) Write an SQL query to update the Penalty_Amount of a member using the Member_Penalty view. 
+Ans->
+UPDATE member_penalty SET penalty_amount = 100 
+	WHERE member_name='Harry';
+
+
+Q8) Write an SQL query to create a view named Book_Issue_Details that displays: 
+Book_Name, Member_Name, Issue_Date, Return_Date 
+by joining Books, Member, and Issue tables. 
+Ans->
+CREATE VIEW book_issue_details AS
+SELECT book_name,member_name,issue_date,return_date
+    FROM issue i INNER join books b ON i.book_no=b.book_no 
+		INNER JOIN member m ON i.member_id=m.member_id;
+
+
+Q9) Write an SQL query to display Book_Name, Member_Name, Issue_Date from the view 
+Book_Issue_Details. 
+Ans->
+SELECT * FROM book_issue_details;
+
+Q10) Write an SQL query to drop the view Issued_Books. 
+Ans->
+DROP VIEW issued_book;
+
+Q11) Write an SQL query to drop the view Member_Penalty.
+Ans->
+DROP VIEW member_penalty;
+ 
+Q12) Write an SQL query to drop the view Book_Issue_Details.
+DROP VIEW book_issue_details;
